@@ -1,16 +1,16 @@
-from config import CLEANED_DATA
+from config import CLEANED_DATA, FIGURES_DIR
 from scipy.stats import pearsonr
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Apply dark theme with orange accent color for all plots in this script
-plt.style.use('dark_background')
-plt.rcParams['text.color'] = '#FF4500'
-plt.rcParams['axes.labelcolor'] = '#FF4500'
-plt.rcParams['xtick.color'] = '#FF4500'
-plt.rcParams['ytick.color'] = '#FF4500'
-plt.rcParams['axes.titlecolor'] = '#FF4500'
+# # Apply dark theme with orange accent color for all plots in this script
+# plt.style.use('dark_background')
+# plt.rcParams['text.color'] = '#FF4500'
+# plt.rcParams['axes.labelcolor'] = '#FF4500'
+# plt.rcParams['xtick.color'] = '#FF4500'
+# plt.rcParams['ytick.color'] = '#FF4500'
+# plt.rcParams['axes.titlecolor'] = '#FF4500'
 
 # Load the cleaned dataset
 df = pd.read_csv(CLEANED_DATA)
@@ -26,7 +26,8 @@ plt.title("EV Registrations by Model Year")
 plt.xlabel("Model Year")
 plt.ylabel("Number of Vehicles")
 plt.tight_layout()
-plt.show()
+plt.savefig(FIGURES_DIR / "ev_registrations_by_model_year.png")
+# plt.show()
 
 # Electric range distribution
 plt.figure(figsize=(10, 5))
@@ -34,8 +35,9 @@ sns.histplot(df['electric_range'], bins=30, kde=True)
 plt.title("Distribution of Electric Range")
 plt.xlabel("Electric Range (miles)")
 plt.ylabel("Number of Vehicles")
+plt.savefig(FIGURES_DIR / "electric_range_distribution.png")
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 # EV type breakdown - fully electric (BEV) vs plug-in hybrid (PHEV)
 plt.figure(figsize=(8, 5))
@@ -43,8 +45,9 @@ sns.countplot(data=df, y='electric_vehicle_type', order=df['electric_vehicle_typ
 plt.title("BEV vs PHEV Count")
 plt.xlabel("Number of Vehicles")
 plt.ylabel("Vehicle Type")
+plt.savefig(FIGURES_DIR / "bev_vs_phev_count.png")
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 # Top counties/cities by EV registrations
 top_counties = df['county'].value_counts().head(10)
@@ -56,7 +59,8 @@ plt.title("Top 10 Counties by EV Registrations")
 plt.xlabel("Number of Vehicles")
 plt.ylabel("County")
 plt.tight_layout()
-plt.show()
+plt.savefig(FIGURES_DIR / "top_counties_ev_registrations.png")
+# plt.show()
 
 # Correlation between model year and electric range
 valid_data = df[['model_year', 'electric_range']].dropna()
